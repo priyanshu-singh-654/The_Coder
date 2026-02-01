@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Management System</title>
+  <style>
+    /* Google Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #f1f5f9;
+      color: #333;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #0077b6, #0096c7);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      margin-bottom: 8px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Sections */
+    section {
+      display: none;
+      padding: 40px 20px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Intro */
+    .intro {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+
+    .intro h2 {
+      color: #0077b6;
+      margin-bottom: 15px;
+    }
+
+    .intro p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    /* Forms */
+    .form-box {
+      max-width: 450px;
+      margin: 20px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0px 6px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-box label {
+      font-weight: 500;
+      color: #0077b6;
+      text-align: left;
+    }
+
+    .form-box input,
+    .form-box select,
+    .form-box textarea {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      font-size: 15px;
+      transition: border 0.3s;
+    }
+
+    .form-box input:focus,
+    .form-box select:focus,
+    .form-box textarea:focus {
+      border: 1px solid #0077b6;
+      box-shadow: 0 0 5px rgba(0, 119, 182, 0.3);
+    }
+
+    .form-box button {
+      padding: 12px;
+      background: linear-gradient(135deg, #0077b6, #0096c7);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .form-box button:hover {
+      background: #023e8a;
+      transform: scale(1.03);
+    }
+
+    /* Doctor Cards */
+    .card-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px auto;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 6px 12px rgba(0,0,0,0.1);
+      width: 260px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .card h3 {
+      color: #0077b6;
+      margin-bottom: 10px;
+    }
+
+    /* Pharmacy Table */
+    .medicine-table {
+      width: 85%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0px 6px 12px rgba(0,0,0,0.1);
+    }
+
+    .medicine-table th,
+    .medicine-table td {
+      border: 1px solid #eee;
+      padding: 14px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .medicine-table th {
+      background: #0077b6;
+      color: white;
+      font-weight: 600;
+    }
+
+    .medicine-table tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    /* Footer */
+    footer {
+      background: #0077b6;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hospital Management System</h1>
+    <nav>
+      <ul>
+        <li><a onclick="showSection('home')">Home</a></li>
+        <li><a onclick="showSection('patients')">Patients</a></li>
+        <li><a onclick="showSection('doctors')">Doctors</a></li>
+        <li><a onclick="showSection('appointments')">Appointments</a></li>
+        <li><a onclick="showSection('billing')">Billing</a></li>
+        <li><a onclick="showSection('pharmacy')">Pharmacy</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Home -->
+  <section id="home" class="active">
+    <div class="intro">
+      <h2>Welcome to Our HMS</h2>
+      <p>
+        Our Hospital Management System provides a streamlined way to manage 
+        patients, doctors, appointments, billing, and pharmacy inventory. 
+        This modern interface ensures efficiency and accuracy in healthcare management.
+      </p>
+    </div>
+  </section>
+
+  <!-- Patients -->
+  <section id="patients">
+    <h2>Register New Patient</h2>
+    <form class="form-box">
+      <label>Patient Name:</label>
+      <input type="text" placeholder="Enter full name" required>
+      <label>Age:</label>
+      <input type="number" placeholder="Enter age" required>
+      <label>Gender:</label>
+      <select>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+      <label>Contact Number:</label>
+      <input type="tel" placeholder="Enter phone number" required>
+      <label>Address:</label>
+      <textarea placeholder="Enter address"></textarea>
+      <button type="submit">Register Patient</button>
+    </form>
+  </section>
+
+  <!-- Doctors -->
+  <section id="doctors">
+    <h2>Meet Our Specialists</h2>
+    <div class="card-container">
+      <div class="card">
+        <h3>Dr. Hardik Chavda</h3>
+        <p>Cardiologist</p>
+        <p>Experience: 10 years</p>
+      </div>
+      <div class="card">
+        <h3>Dr. Hardik Mehta</h3>
+        <p>Neurologist</p>
+        <p>Experience: 8 years</p>
+      </div>
+      <div class="card">
+        <h3>Dr. Hardik Lokhande</h3>
+        <p>Pediatrician</p>
+        <p>Experience: 12 years</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appointments -->
+  <section id="appointments">
+    <h2>Book Appointment</h2>
+    <form class="form-box">
+      <label>Patient Name:</label>
+      <input type="text" placeholder="Enter patient name" required>
+      <label>Doctor Name:</label>
+      <input type="text" placeholder="Enter doctor name" required>
+      <label>Date:</label>
+      <input type="date" required>
+      <label>Time:</label>
+      <input type="time" required>
+      <button type="submit">Book Appointment</button>
+    </form>
+  </section>
+
+  <!-- Billing -->
+  <section id="billing">
+    <h2>Generate Bill</h2>
+    <form class="form-box" oninput="calcTotal()">
+      <label>Patient Name:</label>
+      <input type="text" placeholder="Enter patient name" required>
+      <label>Doctor Charges:</label>
+      <input type="number" id="doc" placeholder="Enter charges" required>
+      <label>Medicine Charges:</label>
+      <input type="number" id="med" placeholder="Enter charges" required>
+      <label>Other Charges:</label>
+      <input type="number" id="oth" placeholder="Enter charges">
+      <label>Total Amount:</label>
+      <input type="number" id="total" disabled>
+      <button type="submit">Generate Bill</button>
+    </form>
+  </section>
+
+  <!-- Pharmacy -->
+  <section id="pharmacy">
+    <h2>Available Medicines</h2>
+    <table class="medicine-table">
+      <thead>
+        <tr>
+          <th>Medicine Name</th>
+          <th>Stock</th>
+          <th>Price (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Paracetamol</td><td>120</td><td>25</td></tr>
+        <tr><td>Amoxicillin</td><td>80</td><td>50</td></tr>
+        <tr><td>Cough Syrup</td><td>50</td><td>75</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Hospital Management System | Designed with Aman Kumar</p>
+  </footer>
+
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll("section").forEach(sec => {
+        sec.classList.remove("active");
+      });
+      document.getElementById(sectionId).classList.add("active");
+    }
+
+    function calcTotal() {
+      let doc = parseFloat(document.getElementById("doc").value) || 0;
+      let med = parseFloat(document.getElementById("med").value) || 0;
+      let oth = parseFloat(document.getElementById("oth").value) || 0;
+      document.getElementById("total").value = doc + med + oth;
+    }
+  </script>
+</body>
+</html>
+

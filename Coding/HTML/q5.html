@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Rowspan Table Examples</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
+    table {
+      border: 2px solid black;
+      border-collapse: collapse;
+      width: 300px;
+      height: 150px;
+      margin-bottom: 30px;
+    }
+
+    td {
+      border: 2px solid black;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Table 1: Rowspan = 3</h2>
+  <table>
+    <tr>
+      <td rowspan="3">rowspan=3</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+    </tr>
+  </table>
+
+  <h2>Table 2: Rowspan = 2</h2>
+  <table>
+    <tr>
+      <td></td>
+      <td rowspan="2">rowspan=2</td>
+    </tr>
+    <tr>
+      <td></td>
+    </tr>
+  </table>
+
+</body>
+</html>
